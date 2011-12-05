@@ -1,0 +1,48 @@
+Welcome to XMB 2.0 (Karl Davis)
+
+This release honors Karl Davis, a long time XMB crew and community member. 
+Cheers Karl, this one is for you! 
+
+Licensing
+
+XMB 2.0 is licensed under the GPL v3.0
+
+Libraries
+
+The following libraries have been used by XMB 2.0, and are licensed under
+the following licenses:
+
+* OWASP ESAPI 1.1.1 is licensed under the LGPL v3.0
+  http://www.gnu.org/licenses/lgpl.html
+
+* jQuery is licensed under jquery.com
+
+Installation
+
+Upload all the files to your webroot, making sure that your public_html and the apps' 
+public_html overlap. 
+
+Change the permissions on all the files in config/ to mode 660.
+Change the permissions on the attachments/ directory to mode 770.
+
+Open your browser, and run http://path.to.your.site/forum/install/
+
+Click on the Install button and follow the instructions.  
+
+
+Converting from XMB 1.x
+
+Once taking note of your database details in config.php, please delete the
+contents of the entire public_html 
+directory. 
+
+Upload all the files as per the installation instructions above, and then set the permissions below:
+
+Change the permissions on all the files in config/ to mode 660.
+Change the permissions on the attachments/ directory to mode 770.
+
+Open your browser, and run http://path.to.your.site/forum/install/
+
+Click on the upgrade button and follow the instructions. 
+
+

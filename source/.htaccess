@@ -1,0 +1,15 @@
+Options +FollowSymlinks
+
+RewriteEngine on
+
+# Uncomment this if you have problems with your forum
+#RewriteBase /{path_to_forum_with_leading_foward_slash}/
+
+
+RewriteRule ^(\w+)/?([A-Za-z0-9\-_]*)/?([A-Za-z0-9\-_]*?)/?$ index.php?control=$1&action=$2&id=$3 [QSA,L]
+
+
+<Files ~ "\.view\.php|\.class\.php|\.model\.php|\.controller\.php|\.datahandle\.php$">  
+Order allow,deny  
+Deny from all  
+</Files>

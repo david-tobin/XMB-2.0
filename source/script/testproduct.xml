@@ -1,0 +1,34 @@
+<package name="Test Package" version="1.0" author="David" varname="test_package">
+	<codes>
+		<installcode version="1.0">
+			<![CDATA[
+				$this->registry->db->query(" DELETE FROM something WHERE something = something ");
+			]]>
+		</installcode>
+	</codes>
+	
+	<plugins>
+		<plugin name="My Test Plugin" hook="index_start" controller="index">
+			<![CDATA[
+				echo "Plugin Code 1";
+			]]>
+		</plugin>
+
+		<plugin name="My Test Plugin 2" hook="thread_view_start" controller="thread">
+			<![CDATA[
+				echo "Plugin Code 2";
+			]]>
+		</plugin>
+
+		<plugin name="My Test Plugin 3" hook="global_start" controller="global">
+			<![CDATA[
+				if ($xmb->user['uid'] > 0) echo "User only code";
+			]]>
+		</plugin>
+	</plugins>
+
+	<phrases>
+		<phrase varname="myphrase" phrasegroup="global"><![CDATA[ My Phrase ]]></phrase>
+		<phrase varname="myphrase2" phrasegroup="global"><![CDATA[ My Phrase 2 ]]></phrase>
+	</phrases>
+</package>
