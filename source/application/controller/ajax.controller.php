@@ -363,8 +363,7 @@ class ajaxController extends Controller
 			echo '<table class="xtable">';
 			echo '<tr class="xrow">
      			  	<td class="xhead" colspan="2">
-            			<input id="streaminput" size="100" type="text" class="input" style="color: gray; padding: 3px; font-size: 10px;" value="" />
-           				<button id="streamgo" class="button">Post</button>
+            			<input id="streaminput" size="100" type="text" class="input" style="float: left; color: gray; padding: 3px; font-size: 10px;" placeholder="Post a new status update..." />
        				</td>
     			</tr>';
 			echo $stream->createStream();

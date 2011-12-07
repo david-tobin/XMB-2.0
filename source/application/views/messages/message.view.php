@@ -1,7 +1,7 @@
 <?php if (!defined('IN_CODE')) die ('You cannot run this file directly.'); ?>
 
 <tr class="xrow">
-	<td class="xhead">Subject:&nbsp; {xmb:var message.subject}</td>
+	<td class="xhead">Subject:&nbsp; {xmb:html message.subject}</td>
 </tr>
 
 
@@ -11,7 +11,7 @@
 
 <tr class="xrow">
 	<td class="alt1">
-		{xmb:var message.message}
+		{xmb:html message.message}
 	</td>
 </tr>
 

@@ -9,7 +9,7 @@
 <?php } ?>
 
 <tr class="xrow">
-	<td class="alt1">
+	<td class="alt1 hover">
 		<a href="{xmb:url messages/view/{xmb:var messages.pmid}}">{xmb:html messages.subject}</a>
 		<br /><span class="smallfont">{xmb:html messages.message}</span>
 	</td>

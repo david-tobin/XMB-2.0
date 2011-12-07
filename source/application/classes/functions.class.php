@@ -257,10 +257,12 @@ class XMB_Core extends XMB_Registry {
 	 */
 	public function loadmodel($model, $action, $id) {
 		$loadmodel = X_PATH . "/application/model/" . $model . ".model.php";
-
-		include ($loadmodel);
-
 		$modelname = $model . "Model";
+        
+        if (!class_exists($modelname)) {
+            include ($loadmodel);
+        }
+        
 		$model = new $modelname ( $this );
 
 		$model->$action ( $id );

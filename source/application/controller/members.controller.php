@@ -38,6 +38,10 @@ class membersController extends Controller
 
 	public function profile($id = '')
 	{
+        if (!$id) {
+            $id = $this->registry->user['username'];    
+        }
+        
 		define('NO_GUEST', true);
 
 		$this->method = 'profile';

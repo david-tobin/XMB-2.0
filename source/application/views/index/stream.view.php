@@ -7,37 +7,28 @@
 		
 <script type="text/javascript">
 	$(document).ready(function() {
-		$("#streamgo").click(function() {
-			var status = $("#streaminput").attr('value');
-			$("#statusinput").attr('value', 'Sending...');
-			status_post(status);
-		});
-		
-		$("#streaminput").click(function() {
-			$(this).attr('value', '');
-		});
-
 		$("#streamrefresh").click(function() {
 			refreshStream();
 		});
 	});
 </script>
 
-<div class="head">Live Stream <span class="smallfont" style="float: right;"><a style="cursor: pointer;" id="streamrefresh">Refresh</a> | <a href="index/home/">View Forum List</a></span></div>
-<div id="streamholder">
-<table class="xtable">
-    <tr class="xrow">
-        <td class="xhead" colspan="2">
-            <input id="streaminput" size="100" type="text" class="input" style="color: gray; padding: 3px; font-size: 10px;" value="Post a new status update!" />
-            <button id="streamgo" class="button">Post</button>
-        </td>
-    </tr>
-    
-    {xmb:html streams}
-    
-</table>
-</div>
-<div class="foot"></div>
+<form onsubmit="status_post($('#streaminput').attr('value')); return false;">
+    <div class="head">Live Stream <span class="smallfont" style="float: right;"><a style="cursor: pointer;" id="streamrefresh">Refresh</a> | <a href="index/home/">View Forum List</a></span></div>
+    <div id="streamholder">
+    <table class="xtable">
+        <tr class="xrow">
+            <td class="xhead" style="text-align: left;" colspan="3">
+                <input id="streaminput" size="100" type="text" class="input" style="float: left; color: gray; padding: 3px; font-size: 10px;" placeholder="Post a new status update..." />
+            </td>
+        </tr>
+        
+        {xmb:html streams}
+        
+    </table>
+    </div>
+    <div class="foot"></div>
+</form>
 
 <br />
 

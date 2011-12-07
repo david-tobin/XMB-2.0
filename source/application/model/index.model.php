@@ -93,17 +93,18 @@ class indexModel extends Model
 
 			$forum .= $this->registry->view->loadtovar('index_catagory_end', 'index');
 		}
-
-		/** STATISTICS **/
-		$stats = $this->registry->cache->get_cache('statistics');
-
-		/** SET VARIABLES TO BE LOADED IN PAGE **/
-		$this->registry->view->setvar('stats', $stats);
 		$this->registry->view->setvar('forumdisplay', $forum);
 
 		if ($this->registry->fetch_hook('index_complete') != false)
 			eval($this->registry->fetch_hook('index_complete'));
 	}
+    
+    public function set_statistics($id) {
+		$stats = $this->registry->cache->get_cache('statistics');
+
+		/** SET VARIABLES TO BE LOADED IN PAGE **/
+		$this->registry->view->setvar('stats', $stats);
+    }
 }
 
 ?>

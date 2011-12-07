@@ -161,8 +161,12 @@ class Template
 		return $content;
 	}
 
-	public function loadview($view, $controller, $title = "Forum")
+	public function loadview($view, $controller, $title = "")
 	{
+	   if (empty($title)) {
+	       $title = ucfirst($this->registry->controller);
+	   }
+       
 		// while(@ob_end_clean());
 		ob_start();
 		$this->loadheader($title);

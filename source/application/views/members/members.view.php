@@ -8,7 +8,7 @@ $(function() {
 </script>
 
 
-<div class="head">{xmb:var members.username} <span style="font: 12px Tahoma;">{xmb:var members.status}</span></div>
+<div class="head">{xmb:var members.username} - <span style="font: 12px Tahoma;">{xmb:var members.status}</span></div>
 	
 <table class="xtable">
     <tr class="xrow">
@@ -41,7 +41,7 @@ $(function() {
 					<td class="profilebox">
 						<span class="smallfont">Avatar</span>
 						<div class="profileinset" style="text-align: center;">
-								<img src="{xmb:var members.avatar}" alt="{xmb:var members.username}'s Avatar" width="100" />
+								<img src="{xmb:url avatar}" alt="{xmb:var members.username}'s Avatar" width="100" />
 						</div>
 					</td>	
 				</tr>

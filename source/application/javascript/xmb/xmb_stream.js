@@ -19,6 +19,8 @@ function status_post(status) {
 						$(this).dequeue();
 					});
 					$("#streamholder").fadeIn(2500);
+                    
+                    $("#sidebar_status").text(status);
 				}
 		}
 		});

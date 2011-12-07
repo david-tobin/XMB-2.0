@@ -93,7 +93,7 @@ class forumModel extends Model
 				$this->registry->view->setvar('totalthreads', $totalthreads);
 			} else
 			{
-				$noresults = '<tr><td class="alt1">No Threads.</td></tr>';
+				$noresults = '<tr><td class="alt1" colspan="4">This forum currently has no threads.</td></tr>';
 
 				$this->registry->view->setvar('threads', $noresults);
 			}

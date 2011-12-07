@@ -12,19 +12,19 @@
       <tr class="xrow">
         <td class="alt1" style="margin-left: 3px;">
         	<span class="postheader">
-	            <?php echo $thread['postsubject'];?>
+	            {xmb:html thread.postsubject}
 	            <span class="smallfont" style="float: right;">Posted:
-	            <?php echo $thread['posted'];?>
+	               {xmb:html thread.posted}
 	            </span> <br />
-	            <a href="members/profile/<?php echo $thread['author'];?>/" id="username_<?php echo $thread['pid'];?>" style="text-decoration: none; cursor: pointer;" onmouseover="menu2('username_<?php echo $thread['pid'];?>', 'mempop_<?php echo $thread['pid'];?>');">
-	            <?php echo $thread['username'];?>
-	            </a> <sup><span class="smallfont" style="color: <?php echo $thread['online_color'];?>; font-weight: bold;">
-	            <?php echo $thread['online'];?>
+	            <a href="members/profile/{xmb:html thread.author}/" id="username_{xmb:var thread.pid}" style="text-decoration: none; cursor: pointer;" onmouseover="menu2('username_{xmb:var thread.pid}', 'mempop_{xmb:var thread.pid}');">
+	               {xmb:html thread.username}
+	            </a> <sup><span class="smallfont" style="color: {xmb:html thread.online_color}; font-weight: bold;">
+	            {xmb:html thread.online}
 	            </span></sup> <br />
           </span>
            <hr />
-          <div id="message_<?php echo $thread['pid'];?>">
-            <?php echo $thread['message'];?>
+          <div id="message_{xmb:var thread.pid}">
+            {xmb:html thread.message}
           </div>
           <br />
           <br />
@@ -43,7 +43,7 @@
           <br />
           <hr style="width: 200px; float: left;" />
           <br />
-          <?php echo $thread['sig'];?>
+            {xmb:html thread.sig}
           </td>
       </tr>
       <tr class="xrow">

@@ -47,7 +47,7 @@ class searchModel extends Model
 			$this->registry->view->setvar('threads', $threads);
 		} else
 		{
-			$threads = 'No new posts today.';
+			$threads = '<tr class="xrow"><td class="alt1">No new posts today.</td></tr>';
 
 			$this->registry->view->setvar('results', 0);
 			$this->registry->view->setvar('threads', $threads);

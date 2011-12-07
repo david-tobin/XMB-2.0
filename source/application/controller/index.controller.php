@@ -41,7 +41,9 @@ class indexController extends Controller
 		$this->registry->construct_navbits(array());
 
 		$this->registry->loadmodel('index', 'stream', $id);
-		$this->registry->view->loadview('stream', 'index', 'Home'); // PRINT PAGE
+        $this->registry->loadmodel('index', 'set_statistics', $id);
+        
+		$this->registry->view->loadview('stream', 'index', 'Live Stream'); // PRINT PAGE
 	}
 
 	public function home($id = '') {
@@ -54,6 +56,8 @@ class indexController extends Controller
 		$this->registry->construct_navbits(array('' => 'Home'));
 
 		$this->registry->loadmodel('index', 'home', $id);
+        $this->registry->loadmodel('index', 'set_statistics', $id);
+        
 		$this->registry->view->loadview('index', 'index', 'Index'); // PRINT PAGE
 	}
 
