@@ -25,7 +25,7 @@ class adminController extends Controller
 
 	public function index($id = '')
 	{
-		if ($this->login == false)
+		if ($this->login == true)
 		{
 			if ($id) {
 				$this->$id();

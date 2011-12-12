@@ -56,10 +56,10 @@ class searchModel extends Model
 
 	public function dosearch($id)
 	{
-		$this->registry->cleaner->clean('p', 'query', 'TYPE_STR');
+		$this->registry->cleaner->clean('p', 'search', 'TYPE_STR');
 
-		$searchquery = (isset($this->registry->cleaner->cleaned['query']) ? $this->
-			registry->cleaner->cleaned['query'] : false);
+		$searchquery = (isset($this->registry->cleaner->cleaned['search']) ? $this->
+			registry->cleaner->cleaned['search'] : false);
 
 		if ($this->registry->options['search_engine'] == 'sphinx')
 		{
@@ -104,8 +104,8 @@ class searchModel extends Model
 		$search->setSortMode(SPH_SORT_RELEVANCE);
 		$search->setMaxQueryTime(10000);
 
-		$postresults = $search->addQuery($searchquery, 'posts');
-		$userresults = $search->addQuery($searchquery, 'users');
+		$postresults = $search->AddQuery($searchquery, 'posts');
+		$userresults = $search->AddQuery($searchquery, 'users');
 
 		$results = $search->RunQueries();
 
@@ -122,36 +122,38 @@ class searchModel extends Model
 				$this->totalresults['users'] = $results[1]['total_found'];
 				foreach ($results[1]['matches'] as $doc => $docinfo)
 				{
-					$users[] = intval($doc);
+					$users[] = $doc;
 				}
 
 				$posts = array();
 				$this->totalresults['posts'] = $results[0]['total_found'];
 				foreach ($results[0]['matches'] as $doc => $docinfo)
 				{
-					$posts[] = intval($doc);
+					$posts[] = $doc;
 				}
 
 				if ($this->totalresults > 0)
 				{
 					$timebefore = X_TIME;
-					$postresults = $this->registry->db->prepare("
-					SELECT * FROM " . X_PREFIX . "posts
-					WHERE pid IN (:posts)
-					ORDER BY dateline DESC
-				");
-					$postresults->execute(array(':posts' => implode(',', $posts)));
-
+                    
+                    $posts = implode(', ', $posts);
+					$postresults = $this->registry->db->query("
+					   SELECT * FROM " . X_PREFIX . "posts
+					   WHERE pid IN ($posts)
+					   ORDER BY dateline DESC
+				    ");
+                    
+                    $users = implode(',', $users);
 					$userresults = $this->registry->db->prepare("
-					SELECT * FROM " . X_PREFIX . "members
-					WHERE uid IN (:uids)
-					ORDER BY username ASC
-				");
-					$userresults->execute(array(':uids' => implode(',', $users)));
-
+					   SELECT * FROM " . X_PREFIX . "members
+					   WHERE uid IN ($users)
+                       ORDER BY username ASC
+			     	");
+                
 					$searchresults = array('users' => $userresults, 'posts' => $postresults);
 
 					$timeafter = X_TIME;
+                    
 					$this->searchtime = ($results[0]['time'] + $results[1]['time']) + ($timeafter -
 						$timebefore);
 
@@ -166,51 +168,43 @@ class searchModel extends Model
 	private function build_search($searchresults, $searchquery)
 	{
 		$results = '';
-
-		if ($searchresults['posts']->rowCount() > 0 || $searchresults['users']->
-			rowCount() > 0)
+        
+		if ($searchresults['posts']->rowCount() > 0 || $searchresults['users']->rowCount() > 0)
 		{
-			$resultcount = $searchresults['posts']->rowCount() + $searchresults['users']->
-				rowCount();
+			$resultcount = $searchresults['posts']->rowCount() + $searchresults['users']->rowCount();
 			$postresults = $searchresults['posts']->fetchAll(PDO::FETCH_NAMED);
 			$userresults = $searchresults['users']->fetchAll(PDO::FETCH_NAMED);
-
+            
+            $this->registry->load_class('bbcode');
+            $bbcode = new XMB_BBCode($this->registry);
+            
 			foreach ($postresults as $search)
 			{
 				$search['date'] = $this->registry->xmbtime('l jS F Y', $search['dateline']);
-				$search['message'] = substr($search['message'], 0, 150);
+				$search['message'] = substr($bbcode->parse($search['message']), 0, 150);
 				$search['timetaken'] = $this->searchtime;
-				$search['totalfound'] = $this->totalresults['posts'] + $this->totalresults['users'];
-				$this->registry->view->setvar ( 'search', $search );
+				$search['totalfound'] = $this->totalresults['posts'] + $this->totalresults['users'];			$this->registry->view->setvar ( 'search', $search );
 
-
-				$results .= $this->registry->view->loadtovar ( 'search_results_bits', 'search' );
-			}
-
-			foreach ($postresults as $search)
-			{
-				if ($search['subject'])
-				{
-					$postresults['date'] = $this->registry->xmbtime('l jS F Y', $search['dateline']);
-					$postresults['message'] = substr($search['message'], 0, 150);
-					$postresults['timetaken'] = $this->searchtime;
-					$postresults['totalfound'] = $this->totalresults['posts'] + $this->totalresults['users'];
-				}
+                $this->registry->view->setvar('search', $search);
+				$results .= $this->registry->view->loadtovar ( 'search_results_thread', 'search' );
 			}
 
 			foreach ($userresults as $search)
 			{
-				print_r($search);
-				if ($search['uid'])
-				{
-					$userresults['regdate'] = $this->registry->xmbtime('d M Y', $search['regdate']);
-					$userresults['timetaken'] = $this->searchtime;
-					$userresults['totalfound'] = $this->totalresults['posts'] + $this->totalresults['users'];
-				}
+				if ($search['uid'])	{
+					$search['regdate'] = $this->registry->xmbtime('d M Y', $search['regdate']);
+					$search['timetaken'] = $this->searchtime;
+					$search['totalfound'] = $this->totalresults['posts'] + $this->totalresults['users'];
+                    
+                    $this->registry->view->setvar('search', $search);
+                    $results .= $this->registry->view->loadtovar ( 'search_results_member', 'search' );
+                }
 			}
-
+            
 			$this->registry->view->setvar('postresults', $postresults);
 			$this->registry->view->setvar('userresults', $userresults);
+            $this->registry->view->setvar('timetaken', round($this->searchtime), 5);
+            $this->registry->view->setvar('content', $results);
 			$this->registry->view->setvar('results', $resultcount);
 		} else
 		{

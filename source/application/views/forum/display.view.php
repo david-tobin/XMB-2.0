@@ -31,7 +31,6 @@
 		</table>
 
 <div class="foot"></div>
-<br style="line-height: 8px;" />
 <div style="float: right;">{xmb:html pagination}</div>
 <br />
 

@@ -163,11 +163,25 @@ class Template
 
 	public function loadview($view, $controller, $title = "")
 	{
-	   if (empty($title)) {
-	       $title = ucfirst($this->registry->controller);
-	   }
+        if (empty($title)) {
+           $title = ucfirst($this->registry->controller);
+        }
        
-		// while(@ob_end_clean());
+        $getsize = $this->registry->db->prepare("
+            SELECT * FROM " . X_PREFIX . "templateinfo
+            WHERE templateid = :view
+        ");       
+       
+        $getsize->execute(array(':view' => $view));
+        $size = $getsize->fetch();
+           
+        if (!isset($size['size'])) {
+            $size = filesize(X_PATH . '/application/views/' . $controller . '/' . $view . '.view.php');
+            $this->create_templateinfo(array($view, $size));
+        } else {
+            $size = $size['size'];
+        }
+        
 		ob_start();
 		$this->loadheader($title);
 		$this->loadfooter();
@@ -185,7 +199,7 @@ class Template
 		$xmb['gentime'] = $generation;
 		$xmb['loginstatus'] = $this->registry->loginstatus;
 
-		ob_start();
+		ob_start($size['size']);
 		require (X_PATH . '/application/views/' . $controller . '/' . $view .
 			'.view.php');
 		$content = ob_get_contents();
@@ -213,22 +227,6 @@ class Template
 				$user[$index] = $value;
 			}
 		}
-		/*
-		if (isset($this->registry->options))
-		{
-			foreach ($this->registry->options as $index => $value)
-			{
-				$options[$index] = $value;
-			}
-		}
-
-		if (isset($this->registry->phrases))
-		{
-			foreach ($this->registry->phrases as $key => $value)
-			{
-				$phrases[$key] = $value;
-			}
-		}*/
 
 		$version = $this->registry->version;
 		$generation = $this->registry->gentime();
@@ -247,7 +245,21 @@ class Template
 
 		return $output;
 	}
-
+    
+    private function create_templateinfo($data=array()) {
+        if (count($data) > 0) {
+            $insert = $this->registry->db->prepare("
+                INSERT INTO " . X_PREFIX . "templateinfo (templateid, size)
+                VALUES  (
+                            ?,
+                            ?
+                        )
+            ");
+            
+            $insert->execute(array($data[0], intval($data[1])));
+        }
+    }
+    
 	public function loadcss($css)
 	{ // FURTHER REVISION NEEDED
 		$this->css = $css;

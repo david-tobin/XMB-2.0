@@ -3,7 +3,7 @@
 
 <table class="basetable" style="margin: auto;">
 	<tr>
-		<td class="alt1">
+		<td>
 			<div class="notice" style="margin: auto; text-align: center;">
 			<span style="float: left;">Welcome to {xmb:option site_name}!</span> 
 			<br /><br />

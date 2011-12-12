@@ -19,7 +19,7 @@
     <table class="xtable">
         <tr class="xrow">
             <td class="xhead" style="text-align: left;" colspan="3">
-                <input id="streaminput" size="100" type="text" class="input" style="float: left; color: gray; padding: 3px; font-size: 10px;" placeholder="Post a new status update..." />
+                <input id="streaminput" size="100" type="text" class="input" style="float: left !important;" placeholder="Post a new status update..." />
             </td>
         </tr>
         

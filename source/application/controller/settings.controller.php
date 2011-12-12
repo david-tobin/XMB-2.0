@@ -8,7 +8,7 @@
  * @Copyright (c) 2001-2010 XMB Group
  * @Licence GPL 3.0
  */
-class usercpController extends Controller
+class settingsController extends Controller
 {
 	/**
 	 *
@@ -24,21 +24,21 @@ class usercpController extends Controller
 	{
 		define('NO_GUEST', true);
 
-		$this->method = 'usercp';
+		$this->method = 'settings';
 
-		if ($this->registry->fetch_hook('usercp_start') != false)
-			eval($this->registry->fetch_hook('usercp_start'));
+		if ($this->registry->fetch_hook('settings_start') != false)
+			eval($this->registry->fetch_hook('settings_start'));
 
-		$phrases = array('usercp');
+		$phrases = array('settings');
 		$this->registry->loadphrases($phrases);
 
 		$this->registry->no_guest();
 
-		$this->registry->loadmodel('usercp', 'usercp', $id);
+		$this->registry->loadmodel('settings', 'settings', $id);
 
-		$this->registry->construct_navbits(array('' => 'User Control Panel'));
+		$this->registry->construct_navbits(array('' => 'Settings'));
 
-		$this->registry->view->loadview('usercp', 'usercp', 'User Control Panel'); // PRINT PAGE
+		$this->registry->view->loadview('settings', 'settings', 'Settings'); // PRINT PAGE
 	}
 
 	public function options($id = '')

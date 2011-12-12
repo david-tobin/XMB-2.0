@@ -1,6 +1,6 @@
 <?php
 
-class usercpModel extends Model
+class settingsModel extends Model
 {
 
 	public function index($id)
@@ -8,9 +8,9 @@ class usercpModel extends Model
 		$this->usercp();
 	}
 
-	public function usercp($id)
+	public function settings($id)
 	{
-		$this->registry->usercp_method = 'usercp_home';
+		$this->registry->usercp_method = 'account';
 
 		$content = $this->registry->view->loadtovar($this->registry->usercp_method, $this->
 			registry->controller);

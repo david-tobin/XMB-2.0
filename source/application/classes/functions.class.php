@@ -267,6 +267,12 @@ class XMB_Core extends XMB_Registry {
 
 		$model->$action ( $id );
 	}
+    
+    public function load_class($classname) {
+        if (file_exists('./application/classes/' . $classname . '.class.php')) {
+            require_once('./application/classes/' . $classname . '.class.php');
+        }
+    }
 
 	/**
 	 * XMB_Core::generate_securitytoken()

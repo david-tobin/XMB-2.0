@@ -1,6 +1,6 @@
 <?php if (!defined('IN_CODE')) die ('You cannot run this file directly.'); ?>
 <ul class="memberpopup menublank" id="mempop_<?php echo $thread['pid']?>">
-	<li><?php echo $thread['author'];?><img src="<?php echo $thread['avatar'];?>" alt="<?php echo $thread['username'];?>'s Avatar" width="100" style="float: right;" /></li>
+	<li><?php echo $thread['author'];?><img src="avatar/get/{xmb:var thread.uid}" alt="<?php echo $thread['username'];?>'s Avatar" width="100" style="float: right;" /></li>
           	<li></li>
             <li><span class="smallfont">
             <?php echo $thread['usertitle'];?>

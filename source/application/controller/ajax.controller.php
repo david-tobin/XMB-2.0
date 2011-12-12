@@ -16,6 +16,42 @@ class ajaxController extends Controller
 	{
 
 	}
+    
+    public function update_status($id = '') {
+   	    $this->registry->cleaner->clean('p', 'status', 'TYPE_STR');
+		$status = $this->registry->cleaner->status;
+
+		if (!empty($status)) {
+			if ($this->registry->user['uid'] > 0) {
+				$updatestatus = $this->registry->db->prepare("
+    				UPDATE ".X_PREFIX."members
+    				SET status = :status
+    				WHERE username = :username
+		      	");
+				
+                $updatestatus->execute(array(':status' => $status, ':username' => $this->registry->user['username']));
+                
+                $stream = Module::register('stream');
+
+				if ($stream != false) {
+					$streaminfo = array(
+					'streamer'	=> $this->registry->user['username'],
+					'type'		=> 'status',
+					'params' 	=> array('dateline' => X_TIME, 'status' => $status)
+					);
+					$stream->addStream($streaminfo);
+					
+                    if ($id == 1) {
+					   $this->doRefreshStream($stream);
+                    }
+                }
+            }
+            
+            echo "1";
+        } else {
+            echo "0";
+        }
+    }
 
 	public function edittitle($id = '')
 	{
@@ -363,11 +399,13 @@ class ajaxController extends Controller
 			echo '<table class="xtable">';
 			echo '<tr class="xrow">
      			  	<td class="xhead" colspan="2">
-            			<input id="streaminput" size="100" type="text" class="input" style="float: left; color: gray; padding: 3px; font-size: 10px;" placeholder="Post a new status update..." />
+            			<input id="streaminput" size="100" type="text" class="input" style="float: left !important;" placeholder="Post a new status update..." />
        				</td>
     			</tr>';
 			echo $stream->createStream();
 			echo '</table>';
+            
+            return;
 		}
 	}
 	

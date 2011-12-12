@@ -42,8 +42,8 @@
           <br />
           <br />
           <hr style="width: 200px; float: left;" />
-          <br />
-            {xmb:html thread.sig}
+          <br /><br />
+          {xmb:html thread.sig}
           </td>
       </tr>
       <tr class="xrow">

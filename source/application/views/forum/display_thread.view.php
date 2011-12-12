@@ -12,7 +12,7 @@
 					if ($this->registry->perm->is_mod () == 1) {
 						?>
 				    <span style="float: right;">
-                        <img src="http://forums.xmbforum.com/images/admin/deletetopic.gif" rel="overlay" />
+                        <img src="./images/icons/trash.png" width="15" height="15" rel="overlay" />
                     </span>
 					<?php
 					}

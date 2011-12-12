@@ -17,7 +17,7 @@ The XMB Group is not responsible for any of the contents on this page.
 
 <base href="{xmb:option site_url}/" />
 
-<link type="text/css" href="css/main.css"
+<link type="text/css" href="css/style.css"
 	rel="stylesheet" />
 
 <link type="text/css" href="css/admin.css"
